@@ -1,0 +1,294 @@
+swagger: "2.0"
+info:
+  description: "Hier wird eine einfache ToDo Liste dokumentiert"
+  version: "0.1.0"
+  title: "ToDo Liste"
+  termsOfService: "http://swagger.io/terms/"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "127.0.0.1"
+paths:
+  /todo-liste:
+    post:
+      tags:
+      - "ToDoListe"
+      summary: "Fügt einen Eintrag zu einer bestehenden Todo-Liste hinzu."
+      description: ""
+      operationId: "addList"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "List"
+        in: "body"
+        description: "Id der Liste die geändert werden soll"
+        required: true
+        schema: {$ref: "#/definitions/List"}
+      responses:
+        "200":
+          description: "Erfolg"
+          schema:
+            $ref: "#/definitions/List"
+        "404":
+          description: "Fehler"
+          
+  /todo-liste/{list_id}:
+    get:
+      tags:
+      - "list"
+      summary: "Liefert alle Einträge einer Todo-Liste zurück."
+      description: "tba"
+      operationId: "getListById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: list_id
+        in: "path"
+        description: "ID der Liste die angezeigt werden soll"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Erfolg"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Item"
+        "404":
+          description: "Fehler"
+          
+    delete:
+      tags:
+      - "list"
+      summary: "Löscht eine ganze Liste."
+      description: "tba"
+      operationId: "deleteListById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "list_id"
+        in: "path"
+        description: "ID der Liste die angezeigt werden soll"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Erfolg"
+        "404":
+          description: "Fehler"
+  
+  /todo-list/{list_id}/entry:
+    post:
+      tags:
+      - "Entry"
+      summary: "Fügt einen Eintrag zu einer bestehenden Todo-Liste hinzu."
+      description: "Neuer Eintrag"
+      operationId: "addListEntry"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "Item"
+        in: "body"
+        description: "Id der Liste die geändert werden soll"
+        required: true
+        schema: 
+          $ref: "#/definitions/Item"
+      - name: "list_id"
+        in: "path"
+        description: "ID der Liste die angezeigt werden soll"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Erfolg"
+          schema:
+            $ref: "#/definitions/Item"
+        "404":
+          description: "Fehler"
+          
+  /todo-list/{list_id}/entry/{entry_id}:
+    put:
+      tags:
+      - "list"
+      summary: "Aktualisiert einen bestehenden Eintrag"
+      description: "tba"
+      operationId: "getItemById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "list_id"
+        in: "path"
+        description: "ID der Liste"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "entry_id"
+        in: "path"
+        description: "ID des Eintrages der angepasst werden soll"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "Item"
+        in: "body"
+        description: "JSON-Objekt des Eintrags"
+        required: true
+        schema: 
+          $ref: "#/definitions/Item"
+      responses:
+        "200":
+          description: "Erfolg"
+          schema:
+            $ref: "#/definitions/Item"
+        "404":
+          description: "Fehler"
+          
+    delete:
+      tags:
+      - "list"
+      summary: "Liefert alle Einträge einer Todo-Liste zurück."
+      description: "tba"
+      operationId: "deleteEntryById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "list_id"
+        in: "path"
+        description: "ID der Liste die angezeigt werden soll"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "entry_id"
+        in: "path"
+        description: "ID des Eintrages die angezeigt werden soll"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Erfolg"
+        "404":
+          description: "Fehler"
+  /user:
+    get:
+      tags:
+      - "User"
+      summary: "Fügt einen Benutzer hinzu."
+      description: ""
+      operationId: "getUsers"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "Erfolg"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        "404":
+          description: "Fehler"
+    post:
+      tags:
+      - "User"
+      summary: "Fügt einen Benutzer hinzu."
+      description: ""
+      operationId: "addUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "User"
+        in: "body"
+        description: "JSON-Objekt des Benutzers"
+        required: true
+        schema: {"$ref": "#/definitions/User"}
+      responses:
+        "200":
+          description: "Erfolg"
+          schema:
+            $ref: "#/definitions/User"
+        "404":
+          description: "Fehler"
+  /user/{user_id}:
+    delete:
+      tags:
+      - "user"
+      summary: "Löscht einen Benutzer."
+      description: "tba"
+      operationId: "deleteUserById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "user_id"
+        in: "path"
+        description: "ID des Nuters der gelöscht werden soll"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Erfolg"
+        "404":
+          description: "Fehler"
+  
+definitions:
+  List:
+    type: "object"
+    required:
+    - "name"
+    - "list_id"
+    - "user_id"
+    properties:
+      list_id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        example: "testliste"
+      user_id:
+        type: "integer"
+        format: "int64"
+  User:
+    type: "object"
+    required:
+    - "name"
+    - "user_id"
+    properties:
+      name:
+        type: "string"
+        example: "testliste"
+      user_id:
+        type: "integer"
+        format: "int64"
+
+  Item:
+    type: "object"
+    required:
+    - user_id
+    - item_id
+    - list_id
+    properties:
+      text:
+        type: "string"
+        example: "brot"
+      user_id:
+        type: "integer"
+        format: "int64"
+      list_id:
+        type: "integer"
+        format: "int64"
+      item_id:
+        type: "integer"
+        format: "int64"
