@@ -13,7 +13,7 @@ paths:
     post:
       tags:
       - "ToDoListe"
-      summary: "Fügt einen Eintrag zu einer bestehenden Todo-Liste hinzu."
+      summary: "Erstellt eine Liste."
       description: ""
       operationId: "addList"
       consumes:
@@ -292,3 +292,4 @@ definitions:
       item_id:
         type: "integer"
         format: "int64"
+      
