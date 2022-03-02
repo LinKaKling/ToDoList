@@ -98,6 +98,24 @@ def add_new_entry(list_id):
     new_entry['list'] = list_id
     entrys.append(new_entry)
     return jsonify(new_entry), 200
+
+@app.route('/todo-list/{list_id}/entry/{entry_id}', methods=['PUT'])
+def update_entry(list_id,entry_id):
+    # find list entry to update
+    entry_item = None
+    for l in entrys:
+        if l['id'] == entry_id and l['list'] == list_id :
+            entry_item = l
+            break
+    # make JSON from POST data (even if content type is not set correctly)
+    new_entry = request.get_json(force=True)
+    print('Got entry to be updated: {}'.format(new_entry))
+    if entry_item:
+        entrys.remove(entry_item);
+    else : print('No entry to delete, generating new entry')
+    entrys.append(new_entry)
+    return jsonify(new_entry), 200
+
     
 
 """
